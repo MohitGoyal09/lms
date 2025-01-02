@@ -57,9 +57,11 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
+              <Link href="/create">
               <div className="mb-4 w-full">
                 <Button className="bg-blue-600 w-full">+ Create New</Button>
               </div>
+              </Link>
               {items.map((item) => (
                 <SidebarMenuItem
                   className="h-12 mb-1 transition-colors hover:bg-slate-200 rounded-lg"
