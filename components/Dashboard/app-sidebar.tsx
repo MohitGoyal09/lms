@@ -25,7 +25,7 @@ import { Button } from "../ui/button";
 const items = [
   {
     title: "Dashboard",
-    url: "/Dashboard",
+    url: "/dashboard",
     icon: LayoutDashboard,
   },
   {
@@ -35,7 +35,7 @@ const items = [
   },
   {
     title: "Profile",
-    url: "/profile",
+    url: "/dashboard/profile",
     icon: CircleUserRound,
   },
 ];
