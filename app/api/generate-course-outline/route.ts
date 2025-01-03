@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     let aiResp;
     try {
       aiResp = await courseOutline.sendMessage(PROMPT);
-      console.log("AI Response:", JSON.stringify(aiResp, null, 2)); // Logging for debugging
+      console.log("AI Response:", JSON.stringify(aiResp, null, 2)); 
     } catch (error) {
       console.error("Error generating AI response:", error);
       return NextResponse.json(
@@ -36,11 +36,11 @@ export async function POST(req: Request) {
         throw new Error("AI response is missing expected fields");
       }
 
-      // Extract the text from the response
+      
       const text = await aiResp.response.text();
-      console.log("Extracted Text:", text); // Logging for debugging
+      console.log("Extracted Text:", text); 
 
-      // Ensure the text is valid JSON
+      
       if (typeof text !== "string") {
         throw new Error("AI response text is not a string");
       }
