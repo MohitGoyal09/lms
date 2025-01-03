@@ -1,25 +1,37 @@
-"use client"
-import Selectoption from '@/components/create/Selectoption'
-import TopicInput from '@/components/create/TopicInput'
-import { Button } from '@/components/ui/button'
-import { Sparkle } from 'lucide-react'
-import React from 'react'
+"use client";
+import Selectoption from "@/components/create/Selectoption";
+import TopicInput from "@/components/create/TopicInput";
+import { Button } from "@/components/ui/button";
+import { Sparkle } from "lucide-react";
+import { v4 as uuidv4 } from "uuid";
+import React from "react";
+import axios from "axios";
+import { useUser } from "@clerk/nextjs";
 
 export default function Create() {
-  const [step , setStep] = React.useState(0)
-  const [form , setForm] = React.useState({
-    studyType : "",
-    topic : "",
-    difficulty : ""
-  })
-  const handleUserInput = (field : string , value : string) => {
+  const { user } = useUser();
+  const [step, setStep] = React.useState(0);
+  const [form, setForm] = React.useState({
+    studyType: "",
+    topic: "",
+    difficulty: "",
+  });
+  const handleUserInput = (field: string, value: string) => {
     setForm({
       ...form,
-      [field] : value
-    })
-    console.log(form)
-  }
-  
+      [field]: value,
+    });
+    console.log(form);
+  };
+  const GenerateCourseOutline = async () => {
+    const courseId = uuidv4();
+    const result = await axios.post("/api/generate-course-outline", {
+      courseId,
+      ...form,
+      createdBy: user?.primaryEmailAddress?.emailAddress,
+    });
+    console.log(result.data);
+  };
   return (
     <div className="p-5 flex flex-col items-center md:px-24 lg:px-36 mt-20">
       <h2 className="font-bold text-3xl text-blue-600">
@@ -36,12 +48,10 @@ export default function Create() {
         ) : (
           <div className="mt-10">
             {" "}
-            <TopicInput setTopic = {
-              (value) => handleUserInput("topic" , value)
-            } 
-            setDifficulty = {
-              (value) => handleUserInput("difficulty" , value)
-            }/>{" "}
+            <TopicInput
+              setTopic={(value) => handleUserInput("topic", value)}
+              setDifficulty={(value) => handleUserInput("difficulty", value)}
+            />{" "}
           </div>
         )}
       </div>
@@ -62,7 +72,10 @@ export default function Create() {
             Next
           </Button>
         ) : (
-          <Button className="bg-blue-600 hover:bg-blue-700">
+          <Button
+            className="bg-blue-600 hover:bg-blue-700"
+            onClick={GenerateCourseOutline}
+          >
             <Sparkle />
             Generate
           </Button>
@@ -71,4 +84,3 @@ export default function Create() {
     </div>
   );
 }
-
