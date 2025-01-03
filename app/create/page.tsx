@@ -2,14 +2,16 @@
 import Selectoption from "@/components/create/Selectoption";
 import TopicInput from "@/components/create/TopicInput";
 import { Button } from "@/components/ui/button";
-import { Sparkle } from "lucide-react";
+import { Loader2, Sparkle } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 import React from "react";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function Create() {
   const { user } = useUser();
+  const router = useRouter();
   const [step, setStep] = React.useState(0);
   const [form, setForm] = React.useState({
     studyType: "",
@@ -27,11 +29,14 @@ export default function Create() {
 
   const GenerateCourseOutline = async () => {
     const courseId = uuidv4();
+    setLoading(true);
     const result = await axios.post("/api/generate-course-outline", {
       courseId,
       ...form,
       createdBy: user?.primaryEmailAddress?.emailAddress,
     });
+    setLoading(false);
+    router.replace(`/dashboard`);
     console.log(result.data);
   };
 
@@ -78,9 +83,14 @@ export default function Create() {
           <Button
             className="bg-blue-600 hover:bg-blue-700"
             onClick={GenerateCourseOutline}
+            disabled={loading}
           >
-            <Sparkle />
-            Generate
+            {loading ? <Loader2  className="animate-spin"/> : (
+              <>
+                <Sparkle />
+                Generate
+              </>
+            )}
           </Button>
         )}
       </div>
