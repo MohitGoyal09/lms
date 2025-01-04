@@ -8,6 +8,7 @@ import React from "react";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function Create() {
   const { user } = useUser();
@@ -37,6 +38,8 @@ export default function Create() {
     });
     setLoading(false);
     router.replace(`/dashboard`);
+    toast("Your Course Content is Generating");
+
     console.log(result.data);
   };
 

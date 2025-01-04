@@ -13,6 +13,7 @@ import {
 import { Button } from '../ui/button';
 import { Progress } from '../ui/progress';
 import { SkeletonCard } from './SkeletonCard';
+import { RefreshCw } from 'lucide-react';
 
 
 
@@ -70,7 +71,17 @@ export default function CourseList() {
 
     return (
       <div className="mt-10 px-3">
-        <h2 className="font-bold text-2xl">Your Study Material</h2>
+        <div className="flex justify-between items-center">
+          <h2 className="font-bold text-2xl text-gray-800">Your Study Material</h2>
+          <Button 
+            variant="outline" 
+            onClick={GetCourseList}
+            className="flex items-center gap-2 hover:bg-gray-100 transition-colors"
+          >
+            <RefreshCw className="w-4 h-4" />
+            <span>Refresh</span>
+          </Button>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
           {courses.map((course: any) => (
             <Card

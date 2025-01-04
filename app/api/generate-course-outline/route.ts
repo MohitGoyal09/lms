@@ -1,6 +1,8 @@
 import { courseOutline } from "@/config/AiModel";
 import { db } from "@/config/db";
 import { STUDY_MATERIAL_TABLE } from "@/config/schema";
+import { inngest } from "@/inngest/client";
+import { Inngest } from "inngest";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -21,7 +23,7 @@ export async function POST(req: Request) {
     let aiResp;
     try {
       aiResp = await courseOutline.sendMessage(PROMPT);
-      console.log("AI Response:", JSON.stringify(aiResp, null, 2)); 
+      console.log("AI Response:", JSON.stringify(aiResp, null, 2));
     } catch (error) {
       console.error("Error generating AI response:", error);
       return NextResponse.json(
@@ -36,19 +38,15 @@ export async function POST(req: Request) {
         throw new Error("AI response is missing expected fields");
       }
 
-      
       const text = await aiResp.response.text();
-      console.log("Extracted Text:", text); 
+      console.log("Extracted Text:", text);
 
-      
       if (typeof text !== "string") {
         throw new Error("AI response text is not a string");
       }
 
-      // Parse the text into JSON
       aiResult = JSON.parse(text);
 
-      // Validate the parsed JSON structure
       if (!aiResult || typeof aiResult !== "object") {
         throw new Error("AI response is not a valid JSON object");
       }
@@ -73,6 +71,19 @@ export async function POST(req: Request) {
         })
         .returning();
 
+      try {
+        const result = await inngest.send({
+          name: "notes.generate",
+          data: {
+            course: dbResult[0],
+          },
+        });
+        if (!result) {
+          throw new Error("Failed to queue notes generation");
+        }
+      } catch (error) {
+        console.error("Error queuing notes generation:", error);
+      }
       return NextResponse.json(dbResult[0], { status: 201 });
     } catch (error) {
       console.error("Database error:", error);

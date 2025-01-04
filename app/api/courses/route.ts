@@ -1,6 +1,6 @@
 import { db } from "@/config/db";
 import { STUDY_MATERIAL_TABLE } from "@/config/schema";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function POST(req : Request) {
@@ -17,7 +17,8 @@ export async function POST(req : Request) {
     const result = await db
       .select()
       .from(STUDY_MATERIAL_TABLE)
-      .where(eq(STUDY_MATERIAL_TABLE.createdBy, createdBy));
+      .where(eq(STUDY_MATERIAL_TABLE.createdBy, createdBy))
+      .orderBy(desc(STUDY_MATERIAL_TABLE.id));
 
     return NextResponse.json({ result }, { status: 200 });
   } catch (error) {
