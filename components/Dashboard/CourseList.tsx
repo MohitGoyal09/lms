@@ -14,6 +14,7 @@ import { Button } from '../ui/button';
 import { Progress } from '../ui/progress';
 import { SkeletonCard } from './SkeletonCard';
 import { RefreshCw } from 'lucide-react';
+import Link from 'next/link';
 
 
 
@@ -167,9 +168,11 @@ export default function CourseList() {
                     Generating...
                   </Button>
                 ) : (
+                  <Link href={`/course/${course.courseId}`}>
                   <Button className="w-full bg-blue-600 hover:bg-blue-700 transition-colors">
                     View Course
                   </Button>
+                  </Link>
                 )}
               </CardFooter>
             </Card>
