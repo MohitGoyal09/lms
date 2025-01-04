@@ -6,24 +6,23 @@ import { useUser } from "@clerk/nextjs";
 export default function WelcomeBanner() {
   const { user } = useUser();
   return (
-    <div className="p-4 md:p-6 bg-blue-600 w-full text-white rounded-lg flex flex-col md:flex-row items-center gap-4 md:gap-6 shadow-md">
-      <div className="flex flex-col md:flex-row items-center w-full gap-4">
-      <Image
-        src="/laptop.png"
-        alt="laptop"
-        width={120}
-        height={120}
-        className="w-20 h-20 md:w-24 md:h-24 flex-shrink-0"
-      />
-      <div className="flex flex-col gap-2 text-center md:text-left w-full">
-        <div className="font-bold text-xl md:text-3xl">
-        Hello, {user?.fullName}
+    <div className="p-6 md:p-8 bg-gradient-to-r from-blue-600 to-blue-700 w-full text-white rounded-xl flex flex-col md:flex-row items-center gap-6 shadow-lg hover:shadow-xl transition-all duration-300">
+      <div className="flex items-center gap-6 w-full">
+      
+      
+      <div className="flex flex-col gap-2 flex-1">
+        <div className="flex items-center gap-3">
+        <h1 className="font-bold text-2xl md:text-3xl">
+          Welcome back, {user?.firstName || 'Student'}! 👋
+        </h1>
         </div>
-        <p className="text-xs md:text-base">
-        Welcome back! It's time to start learning new courses.
+        <p className="text-white/80 text-sm md:text-base max-w-2xl">
+        Ready to continue your learning journey? You're doing great! Keep up the momentum and explore our latest courses.
         </p>
       </div>
       </div>
+      
+      
     </div>
   );
 }

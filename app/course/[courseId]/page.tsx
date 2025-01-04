@@ -1,14 +1,11 @@
 "use client";
-import DashboardHeader from "@/components/Dashboard/DashboardHeader";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import CourseIntro from "@/components/Course/CourseIntro";
-import { Chapter, Course, CourseLayout } from "@/Types/course";
+import { Course } from "@/Types/course";
 import StudyMaterial from "@/components/Course/StudyMaterial";
 import ChapterList from "@/components/Course/ChapterList";
-
-
 
 export default function CoursePage() {
   const { courseId } = useParams();
@@ -35,7 +32,7 @@ export default function CoursePage() {
       if (result.data.course && Array.isArray(result.data.course)) {
         if (result.data.course.length > 0) {
           const courseData = result.data.course[0];
-          
+
           if (typeof courseData.courseLayout === "string") {
             courseData.courseLayout = JSON.parse(courseData.courseLayout);
           }
@@ -58,7 +55,6 @@ export default function CoursePage() {
   if (courseState === "loading") {
     return (
       <div>
-        <DashboardHeader />
         <div className="mx-10 md:mx-36 lg:px-60 mt-10">
           <p>Loading...</p>
         </div>
@@ -67,7 +63,6 @@ export default function CoursePage() {
   } else if (courseState === "error") {
     return (
       <div>
-        <DashboardHeader />
         <div className="mx-10 md:mx-36 lg:px-60 mt-10">
           <p>Error fetching course data.</p>
         </div>
@@ -77,11 +72,14 @@ export default function CoursePage() {
     console.log(course);
     return (
       <div>
-        <DashboardHeader />
         <div className="mx-10 md:mx-42 lg:px-60 mt-10">
           {course && <CourseIntro course={course} />}
           <h1 className="text-2xl font-bold mb-6 mt-10">Study Material</h1>
-          <StudyMaterial />
+          {courseId && (
+            <StudyMaterial
+              courseId={Array.isArray(courseId) ? courseId[0] : courseId}
+            />
+          )}
           {course && <ChapterList courseLayout={course.courseLayout} />}
         </div>
       </div>
