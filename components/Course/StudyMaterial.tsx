@@ -42,7 +42,7 @@ export default function StudyMaterial({ courseId }: { courseId: string }) {
       type: "quizzes",
     },
     {
-      name: "Practice Questions",
+      name: "QA",
       desc: "Chapter wise practice questions",
       icon: FileQuestion,
       path: "/practice-questions",
@@ -83,7 +83,7 @@ export default function StudyMaterial({ courseId }: { courseId: string }) {
       {MaterialList.map((item) => {
         const isAvailable = studyTypeContent[item.type] !== null && studyTypeContent[item.type] !== undefined;
         return isAvailable ? (
-          <Link href={item.path} key={item.type}>
+          <Link href={`/course/${courseId}${item.path}`} key={item.type}>
             <Card className="transition-all duration-300 hover:bg-slate-100 hover:shadow-lg hover:scale-105">
               <CardHeader className="space-y-4">
                 <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">

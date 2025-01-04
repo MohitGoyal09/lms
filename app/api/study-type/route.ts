@@ -34,7 +34,7 @@ export async function POST(req : Request) {
                 .select()
                 .from(CHAPTER_NOTES_TABLE)
                 .where(eq(CHAPTER_NOTES_TABLE.courseId, courseId));
-
+            console.log('Notes:', notes);
             return NextResponse.json(notes);
         }
     } catch (error) {
