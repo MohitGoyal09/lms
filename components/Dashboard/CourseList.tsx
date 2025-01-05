@@ -15,6 +15,14 @@ import { Progress } from '../ui/progress';
 import { SkeletonCard } from './SkeletonCard';
 import { RefreshCw } from 'lucide-react';
 import Link from 'next/link';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 
 
@@ -22,6 +30,8 @@ export default function CourseList() {
     const { user } = useUser();
     const [courses, setCourses] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const itemsPerPage = 6;
     useEffect(() => {
         user&&GetCourseList();
     }, [user]);
@@ -70,12 +80,16 @@ export default function CourseList() {
         );
     }
 
+
+
     return (
       <div className="mt-10 px-3">
         <div className="flex justify-between items-center">
-          <h2 className="font-bold text-2xl text-gray-800">Your Study Material</h2>
-          <Button 
-            variant="outline" 
+          <h2 className="font-bold text-2xl text-gray-800">
+            Your Study Material
+          </h2>
+          <Button
+            variant="outline"
             onClick={GetCourseList}
             className="flex items-center gap-2 hover:bg-gray-100 transition-colors"
           >
@@ -84,7 +98,7 @@ export default function CourseList() {
           </Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
-          {courses.map((course: any) => (
+          {courses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((course: any) => (
             <Card
               key={course.id}
               className="hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
@@ -161,22 +175,76 @@ export default function CourseList() {
                   >
                     <span className="animate-spin">
                       <svg className="w-5 h-5" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                          fill="none"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
                       </svg>
                     </span>
                     Generating...
                   </Button>
                 ) : (
                   <Link href={`/course/${course.courseId}`}>
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700 transition-colors">
-                    View Course
-                  </Button>
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 transition-colors">
+                      View Course
+                    </Button>
                   </Link>
                 )}
               </CardFooter>
             </Card>
           ))}
+        </div>
+        <div className="mt-5 flex justify-center">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+          <PaginationPrevious 
+            href="#" 
+            onClick={(e) => {
+              e.preventDefault();
+              if (currentPage > 1) setCurrentPage(currentPage - 1);
+            }}
+            className={currentPage <= 1 ? 'pointer-events-none opacity-50' : ''}
+          />
+              </PaginationItem>
+              {[...Array(Math.ceil(courses.length / itemsPerPage))].map((_, index) => (
+          <PaginationItem key={index}>
+            <PaginationLink 
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentPage(index + 1);
+              }}
+              isActive={currentPage === index + 1}
+            >
+              {index + 1}
+            </PaginationLink>
+          </PaginationItem>
+              ))}
+              <PaginationItem>
+          <PaginationNext 
+            href="#" 
+            onClick={(e) => {
+              e.preventDefault();
+              if (currentPage < Math.ceil(courses.length / itemsPerPage)) {
+                setCurrentPage(currentPage + 1);
+              }
+            }}
+            className={currentPage >= Math.ceil(courses.length / itemsPerPage) ? 'pointer-events-none opacity-50' : ''}
+          />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
         </div>
       </div>
     );
