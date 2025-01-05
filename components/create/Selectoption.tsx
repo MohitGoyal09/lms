@@ -1,27 +1,27 @@
 import React from "react";
 import Image from "next/image";
-
+import { ClipboardList, Code,  Dumbbell, Folder,  Users } from 'lucide-react';
 function Selectoption({ selectedStudyType, onSelect } : { selectedStudyType: string, onSelect: (value: string) => void }) {
   const Options = [
     {
       name: "Exam",
-      icon: "/exam_1.png",
+      icon: ClipboardList, // More relevant for exam/test-taking
     },
     {
       name: "Job Interview",
-      icon: "/job.png",
+      icon: Users, // Represents interaction/meeting
     },
     {
       name: "Practice",
-      icon: "/practice.png",
+      icon: Dumbbell, // Better represents practice/exercise
     },
     {
       name: "Coding Prep",
-      icon: "/code.png",
+      icon: Code, // More standard coding icon
     },
     {
       name: "Other",
-      icon: "/knowledge.png",
+      icon: Folder, // Generic container icon
     },
   ];
 
@@ -55,11 +55,8 @@ function Selectoption({ selectedStudyType, onSelect } : { selectedStudyType: str
               onSelect(option.name);
             }}
           >
-            <Image
-              src={option.icon}
-              alt={option.name}
-              width={48}
-              height={48}
+            <option.icon
+              size={48}
               className="w-12 h-12 mb-3"
             />
             <p className="text-center font-medium text-gray-700">
