@@ -1,7 +1,7 @@
 import React from "react";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import { ModeToggle } from "../Toggle";
+// import { ModeToggle } from "../Toggle";
 
 export default function DashboardHeader() {
   return (
@@ -13,7 +13,7 @@ export default function DashboardHeader() {
             Artifical Guruji
           </Link>
         </div>
-        <ModeToggle/>
+        {/* <ModeToggle/> */}
         <UserButton />
       </div>
     </header>

@@ -96,7 +96,7 @@ export default function StudyMaterial({ courseId }: { courseId: string }) {
                   </CardDescription>
                 </div>
                 <Button className="w-full mt-2" variant="outline">
-                  View {item.name}
+                  View 
                 </Button>
               </CardHeader>
             </Card>
@@ -117,7 +117,7 @@ export default function StudyMaterial({ courseId }: { courseId: string }) {
                 </CardDescription>
               </div>
               <Button className="w-full mt-2" variant="outline" >
-                Generate {item.name}
+                Generate
               </Button>
             </CardHeader>
           </Card>

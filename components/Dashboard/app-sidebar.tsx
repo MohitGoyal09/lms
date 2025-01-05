@@ -33,11 +33,7 @@ const items = [
     url: "/dashboard/upgrade",
     icon: Shield,
   },
-  {
-    title: "Profile",
-    url: "/dashboard/profile",
-    icon: CircleUserRound,
-  },
+ 
 ];
 
 export function AppSidebar() {

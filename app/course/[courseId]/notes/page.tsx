@@ -93,7 +93,7 @@ function ViewNotes() {
     }
   };
 
-  // Function to decode the HTML content
+
   const decodeHtmlContent = (content: string) => {
     return content
       .replace(/\\n/g, "\n")
