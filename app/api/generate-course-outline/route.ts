@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     }
 
     const PROMPT = `Generate a study material for ${topic} for ${studyType} and level of difficulty will be ${difficulty} with summary of course, List of Chapters along with summary for each chapter, Topic list in each chapter. All result in JSON format`;
-    console.log("AI Prompt:", PROMPT); // Logging for debugging
+    console.log("AI Prompt:", PROMPT); 
 
     let aiResp;
     try {

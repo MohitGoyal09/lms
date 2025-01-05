@@ -81,47 +81,47 @@ export default function StudyMaterial({ courseId }: { courseId: string }) {
   return (
     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
       {MaterialList.map((item) => {
-        const isAvailable = studyTypeContent[item.type] !== null && studyTypeContent[item.type] !== undefined;
-        return isAvailable ? (
-          <Link href={`/course/${courseId}${item.path}`} key={item.type}>
-            <Card className="transition-all duration-300 hover:bg-slate-100 hover:shadow-lg hover:scale-105">
-              <CardHeader className="space-y-4">
-                <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <div className="space-y-2">
-                  <CardTitle className="text-xl">{item.name}</CardTitle>
-                  <CardDescription className="text-sm text-muted-foreground">
-                    {item.desc}
-                  </CardDescription>
-                </div>
-                <Button className="w-full mt-2" variant="outline">
-                  View 
-                </Button>
-              </CardHeader>
-            </Card>
-          </Link>
-        ) : (
-          <Card
-            key={item.type}
-            className="opacity-70 bg-gray-50 "
-          >
-            <CardHeader className="space-y-4">
-              <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
-                <item.icon className="w-6 h-6 text-primary" />
-              </div>
-              <div className="space-y-2">
-                <CardTitle className="text-xl">{item.name}</CardTitle>
-                <CardDescription className="text-sm text-muted-foreground">
-                  {item.desc}
-                </CardDescription>
-              </div>
-              <Button className="w-full mt-2" variant="outline" >
-                Generate
-              </Button>
-            </CardHeader>
-          </Card>
-        );
+      const isAvailable = studyTypeContent[item.type] !== null && studyTypeContent[item.type] !== undefined;
+      return isAvailable ? (
+        <Link href={`/course/${courseId}${item.path}`} key={item.type}>
+        <Card className="transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-lg hover:scale-105">
+          <CardHeader className="space-y-4">
+          <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+            <item.icon className="w-6 h-6 text-primary" />
+          </div>
+          <div className="space-y-2">
+            <CardTitle className="text-xl">{item.name}</CardTitle>
+            <CardDescription className="text-sm text-muted-foreground">
+            {item.desc}
+            </CardDescription>
+          </div>
+          <Button className="w-full mt-2" variant="outline">
+            View 
+          </Button>
+          </CardHeader>
+        </Card>
+        </Link>
+      ) : (
+        <Card
+        key={item.type}
+        className="opacity-70 bg-gray-50 dark:bg-gray-800"
+        >
+        <CardHeader className="space-y-4">
+          <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+          <item.icon className="w-6 h-6 text-primary" />
+          </div>
+          <div className="space-y-2">
+          <CardTitle className="text-xl">{item.name}</CardTitle>
+          <CardDescription className="text-sm text-muted-foreground">
+            {item.desc}
+          </CardDescription>
+          </div>
+          <Button className="w-full mt-2" variant="outline">
+          Generate
+          </Button>
+        </CardHeader>
+        </Card>
+      );
       })}
     </div>
   );

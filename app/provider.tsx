@@ -8,16 +8,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
     user && ChecknewUser();
   }, [user]);
   const ChecknewUser = async () => {
-    // try {
-    //   const result = await axios.post("/api/user", user, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   });
-    //   console.log(result.data);
-    // } catch (error) {
-    //   console.error("General error in POST /api/user:", error);
-    // }
+    
     const resp = await axios.post("/api/create-user", { user });
     console.log(resp.data.error);
     console.log(resp.data);

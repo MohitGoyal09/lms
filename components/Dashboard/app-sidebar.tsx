@@ -1,7 +1,6 @@
 "use client";
 import {
-  CircleUserRound,
-  Settings,
+  
   LayoutDashboard,
   Shield,
 } from "lucide-react";
@@ -78,18 +77,18 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="px-4 pb-6 border bg-slate-100 rounded-lg">
-        <div className="p-4 border border-border/40 shadow-sm text-sm flex flex-col gap-3 rounded-lg bg-card">
-          <h2 className="font-semibold text-md">Total Usage</h2>
-          <Progress value={55} className="h-2 " />
-          <h2 className="text-xs text-muted-foreground">
-            5 out of 10 Tokens Used
+      <SidebarFooter className="px-4 pb-6 bg-slate-100 dark:bg-slate-900 rounded-lg">
+        <div className="p-4 border border-border/40 shadow-sm text-sm flex flex-col gap-3 rounded-lg bg-white dark:bg-slate-800">
+          <h2 className="font-semibold text-md text-slate-900 dark:text-slate-100">Total Usage</h2>
+          <Progress value={55} className="h-2" />
+          <h2 className="text-xs text-slate-600 dark:text-slate-400">
+        5 out of 10 Tokens Used
           </h2>
           <Link
-            href={"/dashboard/upgrade"}
-            className="text-blue-800 text-xs mt-1"
+        href={"/dashboard/upgrade"}
+        className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-xs mt-1"
           >
-            Upgrade to create more
+        Upgrade to create more
           </Link>
         </div>
       </SidebarFooter>
