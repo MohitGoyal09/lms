@@ -1,6 +1,6 @@
 import React from "react";
 import DashboardHeader from "@/components/Dashboard/DashboardHeader";
-
+import Footer from "@/components/Footer";
 export default function CourseViewLayout({
   children,
 }: {
@@ -10,6 +10,7 @@ export default function CourseViewLayout({
     <div>
       <DashboardHeader />
       {children}
+      <Footer />
     </div>
   );
 }

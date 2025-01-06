@@ -6,6 +6,7 @@ import CourseIntro from "@/components/Course/CourseIntro";
 import { Course } from "@/Types/course";
 import StudyMaterial from "@/components/Course/StudyMaterial";
 import ChapterList from "@/components/Course/ChapterList";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CoursePage() {
   const { courseId } = useParams();
@@ -56,7 +57,28 @@ export default function CoursePage() {
     return (
       <div>
         <div className="mx-10 md:mx-36 lg:px-60 mt-10">
-          <p>Loading...</p>
+          
+          <div className="space-y-4">
+        <Skeleton className="h-12 w-3/4" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-2/3" />
+          </div>
+
+          
+          <div className="mt-10">
+        <Skeleton className="h-8 w-48 mb-6" />
+        <div className="space-y-4">
+          <Skeleton className="h-16 w-full" />
+          <Skeleton className="h-16 w-full" />
+        </div>
+          </div>
+
+         
+          <div className="mt-10 space-y-4">
+        <Skeleton className="h-16 w-full" />
+        <Skeleton className="h-16 w-full" />
+        <Skeleton className="h-16 w-full" />
+          </div>
         </div>
       </div>
     );
@@ -64,9 +86,13 @@ export default function CoursePage() {
     return (
       <div>
         <div className="mx-10 md:mx-36 lg:px-60 mt-10">
-          <p>Error fetching course data.</p>
+          <div className="p-6 bg-red-50 border border-red-200 rounded-lg"></div>
+        <p className="text-red-600 font-medium text-center">
+          Error fetching course data. Please try again later.
+        </p>
+          </div>
         </div>
-      </div>
+      
     );
   } else if (courseState === "success") {
     console.log(course);

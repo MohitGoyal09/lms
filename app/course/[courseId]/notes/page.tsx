@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-
+import { Skeleton } from "@/components/ui/skeleton";
 interface ChapterNotes {
   chapter_number: number;
   chapter_title: string;
@@ -101,13 +101,29 @@ function ViewNotes() {
       .replace(/\\&/g, "&")
       .replace(/\\;/g, ";");
   };
-
   if (loading) {
-    return <p>Loading notes...</p>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="w-full max-w-3xl p-8">
+          <Skeleton className="h-8 w-64 mb-4"/>
+          <Skeleton className="h-4 w-full mb-2"/>
+          <Skeleton className="h-4 w-3/4 mb-2"/>
+          <Skeleton className="h-4 w-5/6"/>
+        </div>
+      </div>
+    );
   }
 
   if (notesData.length === 0) {
-    return <p>No notes available.</p>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            No notes available for this course.
+          </p>
+        </div>
+      </div>
+    );
   }
 
   const currentNote = notesData[currentNoteIndex];

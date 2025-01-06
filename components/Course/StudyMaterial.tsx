@@ -9,6 +9,8 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import axios from "axios";
+import { Skeleton } from "@/components/ui/skeleton";
+
 
 export default function StudyMaterial({ courseId }: { courseId: string }) {
   const [studyTypeContent, setStudyTypeContent] = React.useState<Record<string, unknown>>({});
@@ -43,9 +45,9 @@ export default function StudyMaterial({ courseId }: { courseId: string }) {
     },
     {
       name: "QA",
-      desc: "Chapter wise practice questions",
+      desc: "Chapter wise QA",
       icon: FileQuestion,
-      path: "/practice-questions",
+      path: "/qa",
       type: "practice-questions",
     },
   ];
@@ -71,11 +73,28 @@ export default function StudyMaterial({ courseId }: { courseId: string }) {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
+      {[1, 2, 3, 4].map((i) => (
+      <div key={i} className="space-y-4">
+        <Skeleton className="h-12 w-12 rounded-lg" />
+        <div className="space-y-2">
+        <Skeleton className="h-6 w-32" />
+        <Skeleton className="h-4 w-full" />
+        </div>
+        <Skeleton className="h-10 w-full" />
+      </div>
+      ))}
+    </div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+      <div className="flex items-center justify-center p-6 text-red-500">
+      <div className="bg-red-100 dark:bg-red-900/20 rounded-lg p-4">
+        Error: {error}
+      </div>
+      </div>
+    );
   }
 
   return (

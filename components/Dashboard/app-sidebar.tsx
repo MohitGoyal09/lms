@@ -1,9 +1,5 @@
 "use client";
-import {
-  
-  LayoutDashboard,
-  Shield,
-} from "lucide-react";
+import { LayoutDashboard, Shield } from "lucide-react";
 import Link from "next/link";
 import {
   Sidebar,
@@ -16,7 +12,6 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
-
 import Image from "next/image";
 import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
@@ -32,7 +27,6 @@ const items = [
     url: "/dashboard/upgrade",
     icon: Shield,
   },
- 
 ];
 
 export function AppSidebar() {
@@ -53,13 +47,13 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <Link href="/create">
-              <div className="mb-4 w-full">
-                <Button className="bg-blue-600 w-full">+ Create New</Button>
-              </div>
+                <div className="mb-4 w-full">
+                  <Button className="bg-blue-600 w-full">+ Create New</Button>
+                </div>
               </Link>
               {items.map((item) => (
                 <SidebarMenuItem
-                  className="h-12 mb-1 transition-colors hover:bg-slate-200 rounded-lg"
+                  className="h-12 mb-1 transition-colors  rounded-lg"
                   key={item.title}
                 >
                   <SidebarMenuButton asChild>
@@ -79,16 +73,18 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter className="px-4 pb-6 bg-slate-100 dark:bg-slate-900 rounded-lg">
         <div className="p-4 border border-border/40 shadow-sm text-sm flex flex-col gap-3 rounded-lg bg-white dark:bg-slate-800">
-          <h2 className="font-semibold text-md text-slate-900 dark:text-slate-100">Total Usage</h2>
+          <h2 className="font-semibold text-md text-slate-900 dark:text-slate-100">
+            Total Usage
+          </h2>
           <Progress value={55} className="h-2" />
           <h2 className="text-xs text-slate-600 dark:text-slate-400">
-        5 out of 10 Tokens Used
+            5 out of 10 Tokens Used
           </h2>
           <Link
-        href={"/dashboard/upgrade"}
-        className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-xs mt-1"
+            href={"/dashboard/upgrade"}
+            className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-xs mt-1"
           >
-        Upgrade to create more
+            Upgrade to create more
           </Link>
         </div>
       </SidebarFooter>
