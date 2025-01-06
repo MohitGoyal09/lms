@@ -12,7 +12,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="flex-1 flex flex-col">
         <DashboardHeader />
         <div className="flex-1">{children}</div>
-        <Footer />
+        <div className="mt-8">
+          <Footer />
+        </div>
       </div>
     </div>
   );
