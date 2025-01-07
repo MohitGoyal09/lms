@@ -46,7 +46,7 @@ const PricingCard = ({
         Most Popular
       </div>
     )}
-    <div className="text-center">
+        <div className="text-center">
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
         {title}
       </h2>
@@ -65,9 +65,9 @@ const PricingCard = ({
         )}
       </div>
       <p className="mt-2 text-gray-500">{description}</p>
-    </div>
+        </div>
 
-    <ul className="mt-8 space-y-4">
+        <ul className="mt-8 space-y-4">
       {features.map((feature, index) => (
         <li key={index}>
           <motion.div
@@ -84,14 +84,14 @@ const PricingCard = ({
               } transition-colors`}
             />
             <span className="text-gray-700 dark:text-gray-300 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors">
-              {feature}
+            {feature}
             </span>
           </motion.div>
-        </li>
-      ))}
-    </ul>
+          </li>
+          ))}
+        </ul>
 
-    <Button
+        <Button
       variant={buttonVariant}
       onClick={buttonAction}
       className={`mt-8 w-full rounded-full px-8 py-6 text-sm font-medium transition-all duration-300 transform hover:-translate-y-1 ${

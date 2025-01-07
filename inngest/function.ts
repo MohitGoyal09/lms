@@ -1,7 +1,8 @@
 import {
   generateNotes,
   GenerateStudyTypeContent as GenerateStudyTypeAI,
-  GenerateQuizAiModel
+  GenerateQuizAiModel,
+  GenerateQuestionAiModel,
 } from "@/config/AiModel";
 import { inngest } from "./client";
 import { db } from "@/config/db";
@@ -48,7 +49,6 @@ export const CreateNewUser = inngest.createFunction(
             name: user?.fullName,
             email: user?.primaryEmailAddress?.emailAddress,
             createdAt: new Date(),
-            
           })
           .returning();
 
@@ -115,33 +115,37 @@ export const GenerateStudyTypeContent = inngest.createFunction(
     event: "studyType.content",
   },
   async ({ event, step }) => {
-    const { studyType, prompt, courseId , recordId} = event.data;
-    
+    const { studyType, prompt, courseId, recordId } = event.data;
+
     const AiResult = await step.run(
       "Generating FlashCard using AI",
       async () => {
-        const result =
-          studyType === "flashcards"
-            ? await GenerateStudyTypeAI.sendMessage(prompt)
-            : await GenerateQuizAiModel.sendMessage(prompt);
+        let result;
+
+        if (!prompt || typeof prompt !== "string") {
+          throw new Error("Invalid prompt: Prompt must be a non-empty string");
+        }
+
+        if (studyType === "flashcards") {
+          result = await GenerateStudyTypeAI.sendMessage(prompt);
+        } else if (studyType === "qa") {
+          result = await GenerateQuestionAiModel.sendMessage(prompt);
+        } else {
+          result = await GenerateQuizAiModel.sendMessage(prompt);
+        }
         const AIResult = JSON.parse(result.response.text());
         return AIResult;
       }
     );
-  
+
     const DbResult = await step.run("Save result to DB", async () => {
       const result = await db
         .update(STUDY_TYPE_CONTENT_TABLE)
         .set({
           content: AiResult,
-          status : 'Ready'
+          status: "Ready",
         })
-        .where(
-          and(
-            eq(STUDY_TYPE_CONTENT_TABLE.id, recordId),
-        
-          )
-        );
+        .where(and(eq(STUDY_TYPE_CONTENT_TABLE.id, recordId)));
       return "Data Saved Successfully";
     });
   }

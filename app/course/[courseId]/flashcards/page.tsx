@@ -32,7 +32,7 @@ export default function Flashcards() {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
   const [currentFlashcard, setCurrentFlashcard] = React.useState(0);
-  const [isFlipped, setIsFlipped] = React.useState(false);
+  
   useEffect(() => {
     GetFlashcards();
   }, [courseId]);

@@ -68,8 +68,25 @@ export default function Quiz() {
   };
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <Skeleton className="w-[600px] h-[400px] rounded-lg" />
+      <div className="max-w-3xl mx-auto p-8 space-y-8">
+        <div className="flex justify-between items-center mb-8">
+          <Skeleton className="h-10 w-24" /> {/* Back button */}
+        </div>
+        
+        <div className="text-center mb-8">
+          <Skeleton className="h-8 w-48 mx-auto mb-4" /> {/* Title */}
+          <Skeleton className="h-2 w-full rounded-full mb-2" /> {/* Progress bar */}
+          <Skeleton className="h-4 w-32 mx-auto" /> {/* Question counter */}
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+          <Skeleton className="h-6 w-full mb-6" /> {/* Question */}
+          <div className="space-y-3">
+        {[1, 2, 3, 4].map((i) => (
+          <Skeleton key={i} className="h-14 w-full rounded-lg" /> /* Options */
+        ))}
+          </div>
+        </div>
       </div>
     );
   }

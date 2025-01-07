@@ -30,13 +30,17 @@ export async function POST(req: Request) {
         .map((chapter: Chapter) => `${chapter.title}: ${chapter.content}`)
         .join("\n");
 
-      const PROMPT =
-        type == "flashcards"
-          ? `Generate a JSON-formatted response on the topic: ${chapterContent}. 
-            The content should include front and back pairs, similar to flashcards, 
-            with a maximum of 15 items. Ensure the response is structured as a JSON object 
-            with 'front' and 'back' keys for each item.`
-          : `Generate Quiz on topic : ${chapterContent} with Question and Options along with correct answer in JSON format , (Max 10)`;
+      let PROMPT;
+      if (type === "flashcards") {
+        PROMPT = `Generate a JSON-formatted response on the topic: ${chapterContent}. 
+        The content should include front and back pairs, similar to flashcards, 
+        with a maximum of 15 items. Ensure the response is structured as a JSON object 
+        with 'front' and 'back' keys for each item.`;
+      } else if (type === "qa") {
+        PROMPT = `Generate a set of question-answer pairs on the topic: ${chapterContent}, with each pair including a question and its correct answer in JSON format (maximum of 20 pairs).`;
+      } else {
+        PROMPT = `Generate Quiz on topic : ${chapterContent} with Question and Options along with correct answer in JSON format , (Max 10)`;
+      }
 
       console.log('AI Prompt:', PROMPT);
       //Generate Quiz on topic : <Chapters> with Question and Options along with correct answer in JSON format , (Max 10)
