@@ -38,7 +38,7 @@ export default function DashboardHeader() {
             <span className="font-medium">Dashboard</span>
           </Link>
           <Link
-            href="/dashboard/create"
+            href="/create"
             className={cn(
             "mb-3 flex items-center gap-3 rounded-lg px-4 py-3 hover:bg-muted/60 transition-colors",
             pathname === "/create" && "bg-muted"
