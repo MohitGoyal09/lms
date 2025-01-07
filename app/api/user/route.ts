@@ -1,45 +1,53 @@
 import { db } from "@/config/db";
 import { USER_TABLE } from "@/config/schema";
-import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
+import { NextResponse } from "next/server";
+
 export async function POST(req: Request) {
   try {
-    const user = await req.json();
-    let existingUsers;
-    try {
-      existingUsers = await db
-        .select()
-        .from(USER_TABLE)
-        .where(eq(USER_TABLE.email, user?.primaryEmailAddress?.emailAddress));
-    } catch (dbError) {
-      console.error("Error selecting existing users:", dbError);
-      return NextResponse.json({ error: "Database error" }, { status: 500 });
+    const { email } = await req.json();
+
+    if (!email) {
+      return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
-    if (existingUsers.length > 0) {
-      console.log("User already exists.");
-      return NextResponse.json(existingUsers[0], { status: 200 });
-    }
+    console.log("Checking user status for email:", email);
 
-    let insertedUsers;
-    try {
-      insertedUsers = await db
+    const users = await db
+      .select({
+        id: USER_TABLE.id,
+        email: USER_TABLE.email,
+        isMember: USER_TABLE.isMember,
+        customerId: USER_TABLE.customerId,
+      })
+      .from(USER_TABLE)
+      .where(eq(USER_TABLE.email, email));
+
+    console.log("Found users:", users);
+
+    if (users.length === 0) {
+      // If user doesn't exist, create a new one with default values
+      const newUser = await db
         .insert(USER_TABLE)
         .values({
-          name: user.fullName,
-          email: user.primaryEmailAddress.emailAddress,
+          email: email,
+          name: email.split("@")[0], // Use email prefix as name
+          isMember: false,
+          createdAt: new Date(),
         })
         .returning();
-      console.log("Insert new user successful. Result:", insertedUsers);
-      return NextResponse.json(insertedUsers[0], { status: 201 });
-    } catch (error) {
-      console.error("Error inserting user:", error);
-      return NextResponse.json({ error: "Database error" }, { status: 500 });
+
+      console.log("Created new user:", newUser[0]);
+      return NextResponse.json(newUser[0], { status: 201 });
     }
+
+    const user = users[0];
+    console.log("Returning user data:", user);
+    return NextResponse.json(user, { status: 200 });
   } catch (error) {
-    console.error("General error in POST /api/user:", error);
+    console.error("Error in user API:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Failed to fetch user" },
       { status: 500 }
     );
   }

@@ -5,6 +5,7 @@ import {
   pgTable,
   serial,
   text,
+  timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
 
@@ -13,6 +14,8 @@ export const USER_TABLE = pgTable("users", {
   name: varchar().notNull(),
   email: varchar().notNull(),
   isMember: boolean().default(false),
+  createdAt: timestamp().notNull(),
+  customerId : varchar().default(''),
 });
 
 export const STUDY_MATERIAL_TABLE = pgTable("studyMaterial", {
@@ -39,4 +42,10 @@ export const STUDY_TYPE_CONTENT_TABLE = pgTable('studyTypeContent', {
   content:json(),
   type: varchar().notNull(),
   status: varchar().default("Generating"),
+});
+
+export const PAYMENT_RECORD_TABLE = pgTable("paymentRecord", {
+  id: serial().primaryKey(),
+  customerId: varchar(),
+  sessionId: varchar(),
 });

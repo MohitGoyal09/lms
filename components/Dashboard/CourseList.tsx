@@ -73,14 +73,14 @@ export default function CourseList() {
     if (courses.length === 0) {
         return (
             <div className="mt-10 flex flex-col items-center justify-center gap-4">
-                <h2 className="text-2xl font-bold text-gray-800">Create Your First Course</h2>
-                <p className="text-gray-600">Get started by creating your first course material</p>
-                <Button
-                    onClick={() => window.location.href = '/create'}
-                    className="bg-blue-600 hover:bg-blue-700 transition-colors"
-                >
-                    Create Course
-                </Button>
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Create Your First Course</h2>
+              <p className="text-gray-600 dark:text-gray-300">Get started by creating your first course material</p>
+              <Button
+                onClick={() => window.location.href = '/create'}
+                className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 transition-colors"
+              >
+                Create Course
+              </Button>
             </div>
         );
     }

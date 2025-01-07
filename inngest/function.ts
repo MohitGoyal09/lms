@@ -47,6 +47,8 @@ export const CreateNewUser = inngest.createFunction(
           .values({
             name: user?.fullName,
             email: user?.primaryEmailAddress?.emailAddress,
+            createdAt: new Date(),
+            
           })
           .returning();
 

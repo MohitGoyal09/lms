@@ -29,6 +29,7 @@
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.3",
     "embla-carousel-react": "^8.5.1",
+    "framer-motion": "^11.16.0",
     "html-react-parser": "^5.2.2",
     "inngest": "^3.28.0",
     "lucide-react": "^0.469.0",
@@ -38,6 +39,7 @@
     "react-card-flip": "^1.2.3",
     "react-dom": "^18",
     "sonner": "^1.7.1",
+    "stripe": "^17.5.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^11.0.3"
