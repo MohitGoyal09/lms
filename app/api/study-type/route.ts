@@ -26,10 +26,17 @@ export async function POST(req : Request) {
                 .where(eq(STUDY_TYPE_CONTENT_TABLE.courseId, courseId));
 
             const result = {
-                notes: notes,
-                flashcard: getContent.find((content) => content.type === 'flashcards') || null,
-                quiz: getContent.find((content) => content.type === 'quiz') || null,
-                qa: getContent.find((content) => content.type === 'qa') || null
+              notes: notes,
+              flashcards:
+                getContent.find((content) => content.type === "flashcards") ||
+                null,
+              quizzes:
+                getContent.find((content) => content.type === "quizzes") ||
+                null,
+              qa:
+                getContent.find(
+                  (content) => content.type === "qa"
+                ) || null,
             };
             console.log('Result:', result);
             return NextResponse.json(result);

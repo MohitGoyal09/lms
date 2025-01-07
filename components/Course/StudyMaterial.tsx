@@ -87,7 +87,7 @@ export default function StudyMaterial({
       desc: "Chapter wise QA",
       icon: FileQuestion,
       path: "/qa",
-      type: "practice-questions",
+      type: "qa",
     },
   ];
 

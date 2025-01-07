@@ -1,6 +1,7 @@
 import {
   generateNotes,
   GenerateStudyTypeContent as GenerateStudyTypeAI,
+  GenerateQuizAiModel
 } from "@/config/AiModel";
 import { inngest } from "./client";
 import { db } from "@/config/db";
@@ -113,19 +114,24 @@ export const GenerateStudyTypeContent = inngest.createFunction(
   },
   async ({ event, step }) => {
     const { studyType, prompt, courseId , recordId} = event.data;
-    const FlashcardAiResult = await step.run(
+    
+    const AiResult = await step.run(
       "Generating FlashCard using AI",
       async () => {
-        const result = await GenerateStudyTypeAI.sendMessage(prompt);
+        const result =
+          studyType === "flashcards"
+            ? await GenerateStudyTypeAI.sendMessage(prompt)
+            : await GenerateQuizAiModel.sendMessage(prompt);
         const AIResult = JSON.parse(result.response.text());
         return AIResult;
       }
     );
+  
     const DbResult = await step.run("Save result to DB", async () => {
       const result = await db
         .update(STUDY_TYPE_CONTENT_TABLE)
         .set({
-          content: FlashcardAiResult,
+          content: AiResult,
           status : 'Ready'
         })
         .where(

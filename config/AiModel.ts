@@ -79,3 +79,25 @@ export const GenerateStudyTypeContent = model.startChat({
       },
     ],
   });
+
+  export const GenerateQuizAiModel = model.startChat({
+    generationConfig,
+    history: [
+      {
+        role: "user",
+        parts: [
+          {
+            text: "Generate Quiz on topic :  Flutter Fundamentals , User Interface(UI) Devlopment , Basic App Navigation with Question and Options along with correct answer in JSON format , (Max 10)",
+          },
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {
+            text: '```json\n{\n  "quizTitle": "Flutter Fundamentals & Basic UI/Navigation",\n  "questions": [\n    {\n      "questionId": 1,\n      "question": "What is the primary programming language used for Flutter development?",\n      "options": [\n        "Java",\n        "Kotlin",\n        "Dart",\n        "Swift"\n      ],\n      "correctAnswer": "Dart"\n    },\n     {\n      "questionId": 2,\n      "question": "Which widget is the foundation for building the user interface in Flutter?",\n      "options": [\n        "Container",\n        "Text",\n        "Widget",\n        "LayoutBuilder"\n      ],\n      "correctAnswer": "Widget"\n    },\n    {\n      "questionId": 3,\n       "question": "Which widget is commonly used to create a rectangular box with padding, margin, and decoration?",\n      "options": [\n        "Column",\n        "Row",\n        "Container",\n        "Stack"\n      ],\n      "correctAnswer": "Container"\n    },\n    {\n      "questionId": 4,\n      "question": "What is the purpose of the `setState()` method in Flutter?",\n      "options": [\n        "To create a new widget",\n        "To update the UI by rebuilding the widget tree",\n        "To delete a widget",\n         "To navigate to another screen"\n      ],\n      "correctAnswer": "To update the UI by rebuilding the widget tree"\n    },\n     {\n      "questionId": 5,\n      "question": "What is the main purpose of a \'Column\' widget?",\n      "options": [\n          "To arrange widgets horizontally",\n          "To arrange widgets vertically",\n          "To overlap widgets on each other",\n          "To create a scrollable view"\n      ],\n      "correctAnswer": "To arrange widgets vertically"\n    },\n     {\n        "questionId": 6,\n        "question": "Which widget is used to navigate between different screens in a Flutter application?",\n        "options": [\n          "Container",\n          "Navigator",\n          "AppBar",\n          "TextButton"\n        ],\n        "correctAnswer": "Navigator"\n      },\n      {\n        "questionId": 7,\n         "question": "Which property of the \'MaterialApp\' widget is used to set the initial route of the application?",\n        "options": [\n            "theme",\n            "home",\n            "routes",\n            "initialRoute"\n        ],\n       "correctAnswer":"initialRoute"\n     },\n     {\n        "questionId": 8,\n        "question": "What is the purpose of the \'pushNamed\' method in the Navigator?",\n         "options": [\n             "To remove the current screen from the stack",\n            "To navigate to a new screen and add it to the stack",\n            "To replace the current screen with a new one",\n            "To return to the previous screen"\n         ],\n         "correctAnswer":"To navigate to a new screen and add it to the stack"\n     },\n      {\n        "questionId": 9,\n        "question": "Which widget is commonly used to display a list of items in a scrollable view?",\n        "options":[\n            "Column",\n            "Row",\n            "ListView",\n            "Stack"\n        ],\n        "correctAnswer": "ListView"\n      },\n      {\n        "questionId": 10,\n         "question": "What is the purpose of a stateful widget in Flutter?",\n         "options": [\n            "To display static content only",\n            "To hold the data that changes over time",\n            "To handle user interactions",\n            "To define the app\'s theme"\n         ],\n        "correctAnswer": "To hold the data that changes over time"\n      }\n  ]\n}\n```\n',
+          },
+        ],
+      },
+    ],
+  });
