@@ -21,14 +21,7 @@ export default function CourseIntro({ course }: { course: Course }) {
         </p>
       </div>
 
-      <div className="space-y-2">
-        <label className="text-sm text-gray-500 dark:text-gray-400">Course Progress</label>
-        <Progress
-        value={course?.courseLayout?.chapters.length || 0}
-        max={10}
-        className="h-2"
-        />
-      </div>
+      
 
       <div className="flex items-center space-x-4">
         <div className="flex items-center space-x-2">

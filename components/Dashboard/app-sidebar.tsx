@@ -1,10 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { LayoutDashboard, Shield, Menu } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
+import { CourseCountContext } from "@/app/_context/CourseCountContext";
+
 
 const items = [
   {
@@ -21,7 +23,9 @@ const items = [
 
 export function AppSidebar() {
   const [isOpen, setIsOpen] = useState(true);
-
+  const context = useContext(CourseCountContext);
+  const courseCount = context?.courseCount ?? 0;
+  const setCourseCount = context?.setCourseCount ?? (() => {});
   return (
     <div
       className={`hidden md:flex h-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-r border-border/50 transition-all duration-200 flex-col ${
@@ -72,10 +76,10 @@ export function AppSidebar() {
       {isOpen && (
         <div className="p-4 shrink-0">
           <div className="p-4 border border-border/40 shadow-sm text-sm flex flex-col gap-3 rounded-lg bg-slate-100 dark:bg-slate-900">
-            <h2 className="font-semibold text-md">Total Usage</h2>
-            <Progress value={55} className="h-2" />
+            <h2 className="font-semibold text-md">Available Courses : {5-courseCount}</h2>
+            <Progress value={(courseCount)/5 * 100} className="h-2" />
             <h2 className="text-xs text-slate-600 dark:text-slate-400">
-              5 out of 10 Tokens Used
+              {courseCount} out of 5 Tokens Used
             </h2>
             <Link
               href="/dashboard/upgrade"

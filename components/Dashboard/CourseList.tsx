@@ -1,7 +1,7 @@
 "use client"
 import { useUser } from '@clerk/nextjs';
 import axios from 'axios';
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect , useState} from 'react'
 import {
   Card,
   CardContent,
@@ -23,14 +23,18 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { CourseCountContext } from '@/app/_context/CourseCountContext';
 
 
 
 export default function CourseList() {
     const { user } = useUser();
-    const [courses, setCourses] = React.useState([]);
-    const [loading, setLoading] = React.useState(true);
-    const [currentPage, setCurrentPage] = React.useState(1);
+    const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const courseContext = useContext(CourseCountContext);
+    const courseCount = courseContext?.courseCount;
+    const setCourseCount = courseContext?.setCourseCount;
     const itemsPerPage = 6;
     useEffect(() => {
         user&&GetCourseList();
@@ -48,6 +52,7 @@ export default function CourseList() {
             }
             setCourses(result.data.result);
             console.log(result.data);
+            setCourseCount && setCourseCount(result.data.result.length);
         } catch (error) {
             console.error("Error fetching study materials:", error);
         } finally {
@@ -160,11 +165,7 @@ export default function CourseList() {
           <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
             Total Chapters: {course.courseLayout.chapters.length || 0}
           </span>
-          <Progress
-            value={course.courseLayout.chapters.length || 0}
-            max={10}
-            className="h-2 bg-gray-100 dark:bg-gray-700"
-          />
+          
             </p>
           </CardContent>
           <CardFooter className="px-4 pb-4">
