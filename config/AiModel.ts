@@ -61,3 +61,21 @@ export const generateNotes = model.startChat({
     },
   ],
 });
+
+export const GenerateStudyTypeContent = model.startChat({
+    generationConfig,
+    history: [
+      {
+        role: "user",
+        parts: [
+          {text: "Generate a JSON-formatted response on the topic: Fibrite Fundamentals User Interface (UI) Development Basic Area. The content should include front and back pairs, similar to flashcards, with a maximum of 15 items. Each item should cover fundamental concepts, widgets, or techniques related to UI development in Flutter. Ensure the response is structured as a JSON object with 'front' and 'back' keys for each item."},
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {text: "```json\n{\n  \"fibrite_ui_fundamentals\": [\n    {\n      \"front\": \"What is a 'Widget' in Flutter?\",\n      \"back\": \"The basic building block of a Flutter UI. Everything you see is a widget, from buttons to text to layouts.\"\n    },\n    {\n      \"front\": \"Explain 'StatelessWidget'.\",\n      \"back\": \"A widget that does not change its state internally. It's immutable and the UI depends solely on its properties.\"\n    },\n     {\n      \"front\": \"Explain 'StatefulWidget'.\",\n      \"back\": \"A widget that can change its internal state, causing the UI to rebuild. It's mutable and uses a State object.\"\n    },\n    {\n      \"front\": \"What is the purpose of the 'build' method in a widget?\",\n      \"back\": \"The method that defines what UI elements should be rendered. It returns a widget tree that describes the UI.\"\n    },\n    {\n      \"front\": \"What does the 'MaterialApp' widget do?\",\n       \"back\": \"It sets up the basic application configuration, including theme, home page, and navigation settings for a material-designed app.\"\n    },\n    {\n       \"front\": \"What is 'Scaffold' widget used for?\",\n       \"back\": \"A layout structure providing common UI elements such as app bars, drawers, and bottom navigation.\"\n    },\n    {\n      \"front\": \"Describe the function of 'Container'.\",\n      \"back\": \"A basic widget that can be used for layout purposes. It can have padding, margin, borders, and decorations.\"\n    },\n    {\n      \"front\": \"What does 'Text' widget display?\",\n      \"back\": \"Used to render text strings on the screen. It can be styled using various properties.\"\n    },\n    {\n       \"front\": \"What are 'Rows' and 'Columns' used for?\",\n       \"back\": \"Layout widgets. 'Row' arranges widgets horizontally, and 'Column' arranges them vertically.\"\n    },\n    {\n        \"front\": \"Explain the use of 'Expanded' widget.\",\n        \"back\":\"Makes a child of a Row, Column, or Flex expand to fill the available space. It handles the distribution of remaining space.\"\n    },\n      {\n      \"front\": \"What's 'Padding' in layout?\",\n        \"back\": \"Space around the inside of a widget to create a gap between the widget and its content.\"\n    },\n    {\n      \"front\": \"Explain 'Margin' in layout?\",\n      \"back\": \"Space around the outside of a widget, separating it from other widgets.\"\n    },\n    {\n      \"front\": \"What is a 'Button' widget?\",\n      \"back\": \"A tappable UI element that triggers an action when pressed. Examples include ElevatedButton, TextButton.\"\n    },\n     {\n      \"front\": \"What's the purpose of 'ListView'?\",\n      \"back\": \"A scrollable list of widgets. Useful for displaying collections of items, providing options for different list types.\"\n    },\n    {\n      \"front\": \"Explain the usage of 'Image' widget.\",\n      \"back\": \"Used to display images from various sources such as assets, network, or files. Supports various image formats.\"\n    }\n  ]\n}\n```\n"},
+        ],
+      },
+    ],
+  });

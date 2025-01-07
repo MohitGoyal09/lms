@@ -1,9 +1,17 @@
-import { generateNotes } from "@/config/AiModel";
+import {
+  generateNotes,
+  GenerateStudyTypeContent as GenerateStudyTypeAI,
+} from "@/config/AiModel";
 import { inngest } from "./client";
 import { db } from "@/config/db";
-import { CHAPTER_NOTES_TABLE, STUDY_MATERIAL_TABLE, USER_TABLE } from "@/config/schema";
+import {
+  CHAPTER_NOTES_TABLE,
+  STUDY_MATERIAL_TABLE,
+  USER_TABLE,
+  STUDY_TYPE_CONTENT_TABLE,
+} from "@/config/schema";
 
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 export const helloWorld = inngest.createFunction(
   { id: "hello-world" },
@@ -57,29 +65,76 @@ export const GenerateNotes = inngest.createFunction(
     event: "notes.generate",
   },
   async ({ event, step }) => {
-    const {course} = event.data;
-    const notesResult = await step.run("Generate Notes" , async () => {
+    const { course } = event.data;
+    const notesResult = await step.run("Generate Notes", async () => {
       const Chapters = course?.courseLayout?.chapters;
       let index = 0;
-      Chapters.forEach(async (chapter : any) => {
-        const PROMPT = 'Generate exam material detail content for each chapter, Make sure to include all topic points in the content, make sure to give content in HTML format (Do not Add HTML, Head, Body, title tag), The chapters :' + JSON.stringify(chapter);
+      Chapters.forEach(async (chapter: any) => {
+        const PROMPT =
+          "Generate exam material detail content for each chapter, Make sure to include all topic points in the content, make sure to give content in HTML format (Do not Add HTML, Head, Body, title tag), The chapters :" +
+          JSON.stringify(chapter);
         const result = await generateNotes.sendMessage(PROMPT);
         const aiResp = await result.response.text();
-        await db.insert(CHAPTER_NOTES_TABLE).values({
-          courseId: course.courseId,
-          chapterId: index,
-          notes: aiResp
-        }).returning();
+        await db
+          .insert(CHAPTER_NOTES_TABLE)
+          .values({
+            courseId: course.courseId,
+            chapterId: index,
+            notes: aiResp,
+          })
+          .returning();
         index++;
       });
-      
-      return 'Notes Generated Successfully';
+
+      return "Notes Generated Successfully";
     });
-    const UpdateCourseStatus = await step.run("Update Course Status" , async () => {
-       const result = await db.update(STUDY_MATERIAL_TABLE).set({
-        status: 'notes_generated',
-      }).where(eq(STUDY_MATERIAL_TABLE.id, course.id)).returning();
-      return 'Course Updated Successfully';
-    })
+    const UpdateCourseStatus = await step.run(
+      "Update Course Status",
+      async () => {
+        const result = await db
+          .update(STUDY_MATERIAL_TABLE)
+          .set({
+            status: "notes_generated",
+          })
+          .where(eq(STUDY_MATERIAL_TABLE.id, course.id))
+          .returning();
+        return "Course Updated Successfully";
+      }
+    );
+  }
+);
+
+export const GenerateStudyTypeContent = inngest.createFunction(
+  {
+    id: "generate-study-type-content",
+  },
+  {
+    event: "studyType.content",
+  },
+  async ({ event, step }) => {
+    const { studyType, prompt, courseId , recordId} = event.data;
+    const FlashcardAiResult = await step.run(
+      "Generating FlashCard using AI",
+      async () => {
+        const result = await GenerateStudyTypeAI.sendMessage(prompt);
+        const AIResult = JSON.parse(result.response.text());
+        return AIResult;
+      }
+    );
+    const DbResult = await step.run("Save result to DB", async () => {
+      const result = await db
+        .update(STUDY_TYPE_CONTENT_TABLE)
+        .set({
+          content: FlashcardAiResult,
+          status : 'Ready'
+        })
+        .where(
+          and(
+            eq(STUDY_TYPE_CONTENT_TABLE.id, recordId),
+        
+          )
+        );
+      return "Data Saved Successfully";
+    });
   }
 );

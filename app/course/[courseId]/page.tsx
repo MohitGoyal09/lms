@@ -101,9 +101,10 @@ export default function CoursePage() {
         <div className="mx-10 md:mx-42 lg:px-60 mt-10">
           {course && <CourseIntro course={course} />}
           <h1 className="text-2xl font-bold mb-6 mt-10">Study Material</h1>
-          {courseId && (
+          {courseId && course && (
             <StudyMaterial
               courseId={Array.isArray(courseId) ? courseId[0] : courseId}
+              course={course}
             />
           )}
           {course && <ChapterList courseLayout={course.courseLayout} />}

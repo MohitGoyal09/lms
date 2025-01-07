@@ -3,6 +3,8 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link"; 
+
 interface ChapterNotes {
   chapter_number: number;
   chapter_title: string;
@@ -17,7 +19,8 @@ interface NotesResponse {
   id: number;
   courseId: string;
   chapterId: number;
-  notes: string; }
+  notes: string;
+}
 
 function ViewNotes() {
   const { courseId } = useParams();
@@ -47,14 +50,14 @@ function ViewNotes() {
         .filter((note): note is ChapterNotes => note !== null)
         .sort((a, b) => a.chapter_number - b.chapter_number);
 
-      // Check for missing chapters and insert dummy data
+      
       const minChapter = parsedNotes[0]?.chapter_number || 0;
       const maxChapter =
         parsedNotes[parsedNotes.length - 1]?.chapter_number || 0;
       for (let i = minChapter; i <= maxChapter; i++) {
         const chapter = parsedNotes.find((note) => note.chapter_number === i);
         if (!chapter) {
-          // Insert dummy chapter
+          
           parsedNotes.splice(i - minChapter, 0, {
             chapter_number: i,
             chapter_title: `Chapter ${i}`,
@@ -92,7 +95,6 @@ function ViewNotes() {
     }
   };
 
-
   const decodeHtmlContent = (content: string) => {
     return content
       .replace(/\\n/g, "\n")
@@ -101,14 +103,15 @@ function ViewNotes() {
       .replace(/\\&/g, "&")
       .replace(/\\;/g, ";");
   };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="w-full max-w-3xl p-8">
-          <Skeleton className="h-8 w-64 mb-4"/>
-          <Skeleton className="h-4 w-full mb-2"/>
-          <Skeleton className="h-4 w-3/4 mb-2"/>
-          <Skeleton className="h-4 w-5/6"/>
+          <Skeleton className="h-8 w-64 mb-4" />
+          <Skeleton className="h-4 w-full mb-2" />
+          <Skeleton className="h-4 w-3/4 mb-2" />
+          <Skeleton className="h-4 w-5/6" />
         </div>
       </div>
     );
@@ -130,55 +133,65 @@ function ViewNotes() {
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
-      <div className="flex flex-col items-center gap-6 mb-8">
-      
-      <div className="w-full bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 flex items-center justify-between">
-        <button
-        onClick={handlePrevNote}
-        disabled={currentNoteIndex === 0}
-        className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium transition-all duration-200 transform hover:scale-105
-        ${currentNoteIndex === 0 
-          ? 'bg-gray-100 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
-          : 'bg-blue-600 text-white hover:bg-blue-700 shadow-md'
-        }`}
+      {/* Header Section */}
+      <div className="flex items-center justify-between mb-8">
+        <Link
+          href={`/course/${courseId}`}
+          className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 hover:underline"
         >
-        <span className="text-lg">←</span> Previous
-        </button>
-        
-        <div className="flex flex-col items-center">
-        <span className="text-lg font-bold text-gray-700 dark:text-gray-200">
-          Chapter {currentNote.chapter_number}
-        </span>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
-          of {notesData[notesData.length - 1].chapter_number} chapters
-        </span>
+          <span className="text-lg">←</span> Back to Course
+        </Link>
+      </div>
+
+      <div className="flex flex-col items-center gap-6 mb-8">
+        <div className="w-full bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 flex items-center justify-between">
+          <button
+            onClick={handlePrevNote}
+            disabled={currentNoteIndex === 0}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium transition-all duration-200 transform hover:scale-105
+            ${
+              currentNoteIndex === 0
+                ? "bg-gray-100 dark:bg-gray-700 text-gray-400 cursor-not-allowed"
+                : "bg-blue-600 text-white hover:bg-blue-700 shadow-md"
+            }`}
+          >
+            <span className="text-lg">←</span> Previous
+          </button>
+
+          <div className="flex flex-col items-center">
+            <span className="text-lg font-bold text-gray-700 dark:text-gray-200">
+              Chapter {currentNote.chapter_number}
+            </span>
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              of {notesData[notesData.length - 1].chapter_number} chapters
+            </span>
+          </div>
+
+          <button
+            onClick={handleNextNote}
+            disabled={currentNoteIndex === notesData.length - 1}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium transition-all duration-200 transform hover:scale-105
+            ${
+              currentNoteIndex === notesData.length - 1
+                ? "bg-gray-100 dark:bg-gray-700 text-gray-400 cursor-not-allowed"
+                : "bg-blue-600 text-white hover:bg-blue-700 shadow-md"
+            }`}
+          >
+            Next <span className="text-lg">→</span>
+          </button>
         </div>
 
-        <button
-        onClick={handleNextNote}
-        disabled={currentNoteIndex === notesData.length - 1}
-        className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium transition-all duration-200 transform hover:scale-105
-        ${currentNoteIndex === notesData.length - 1
-          ? 'bg-gray-100 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
-          : 'bg-blue-600 text-white hover:bg-blue-700 shadow-md'
-        }`}
-        >
-        Next <span className="text-lg">→</span>
-        </button>
-      </div>
-
-      
-      <div className="w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition-all duration-300 hover:shadow-xl">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100 border-b dark:border-gray-700 pb-4">
-        {currentNote.chapter_title}
-        </h1>
-        <div 
-        className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-gray-800 dark:prose-headings:text-gray-100 prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400"
-        dangerouslySetInnerHTML={{
-          __html: decodeHtmlContent(currentNote.notes.html_content),
-        }}
-        />
-      </div>
+        <div className="w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition-all duration-300 hover:shadow-xl">
+          <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100 border-b dark:border-gray-700 pb-4">
+            {currentNote.chapter_title}
+          </h1>
+          <div
+            className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-gray-800 dark:prose-headings:text-gray-100 prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400"
+            dangerouslySetInnerHTML={{
+              __html: decodeHtmlContent(currentNote.notes.html_content),
+            }}
+          />
+        </div>
       </div>
     </div>
   );
