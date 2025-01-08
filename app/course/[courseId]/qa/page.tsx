@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ChevronLeft, ChevronRight, AlertCircle } from "lucide-react";
+import { toast } from "sonner";
 
 interface QAPair {
   question: string;
@@ -31,6 +32,9 @@ export default function Qa() {
 
   useEffect(() => {
     fetchQA();
+    toast(
+      "Please keep refreshing the page to see the changes while content is generating"
+    );
   }, [courseId]);
 
   const fetchQA = async () => {

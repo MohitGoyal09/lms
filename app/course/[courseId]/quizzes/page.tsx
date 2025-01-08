@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import type { Quiz, ApiResponse } from "@/Types/quiz";
+import { toast } from "sonner";
 
 export default function Quiz() {
   const { courseId } = useParams();
@@ -23,6 +24,9 @@ export default function Quiz() {
 
   useEffect(() => {
     GetQuiz();
+    toast(
+      "Please keep refreshing the page to see the changes while content is generating"
+    );
   }, [courseId]);
 
   const GetQuiz = async () => {

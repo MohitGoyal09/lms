@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link"; 
+import { toast } from "sonner";
 
 interface ChapterNotes {
   chapter_number: number;
@@ -81,6 +82,9 @@ function ViewNotes() {
 
   useEffect(() => {
     GetNotes();
+    toast(
+      "Please keep refreshing the page to see the changes while content is generating"
+    );
   }, []);
 
   const handlePrevNote = () => {

@@ -2,6 +2,7 @@
 import { useParams } from "next/navigation";
 import FlashCardflip from "@/components/Course/FlashCardflip";
 import axios from "axios";
+import { toast } from "sonner";
 import React, { useEffect } from "react";
 import {
   Carousel,
@@ -35,6 +36,7 @@ export default function Flashcards() {
   
   useEffect(() => {
     GetFlashcards();
+    toast("Please keep refreshing the page to see the changes while content is generating" )
   }, [courseId]);
   const GetFlashcards = async () => {
     setLoading(true);

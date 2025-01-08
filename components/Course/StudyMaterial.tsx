@@ -58,6 +58,7 @@ export default function StudyMaterial({
   };
   useEffect(() => {
     GetStudyMaterial();
+    toast("Please wait few minutes while the content is being generated");
   }, [courseId]);
 
   const MaterialList = [
