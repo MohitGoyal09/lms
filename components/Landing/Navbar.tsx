@@ -19,24 +19,22 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-x-2 sm:gap-x-4">
-          <div className="hidden sm:flex items-center gap-x-2 sm:gap-x-4">
-            <Link
-              href="https://github.com/MohitGoyal09"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all duration-200"
-            >
-              <Github className="h-5 w-5" />
-            </Link>
-            <Link
-              href="https://x.com/ByteMohit"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all duration-200"
-            >
-              <Twitter className="h-5 w-5" />
-            </Link>
-          </div>
+          <Link
+            href="https://github.com/MohitGoyal09"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all duration-200"
+          >
+            <Github className="h-5 w-5" />
+          </Link>
+          <Link
+            href="https://x.com/ByteMohit"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all duration-200"
+          >
+            <Twitter className="h-5 w-5" />
+          </Link>
           <ModeToggle />
           <div className="flex items-center gap-x-1 sm:gap-x-3">
             {!isSignedIn ? (
