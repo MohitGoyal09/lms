@@ -183,7 +183,7 @@ export default function Upgrade() {
           <p>
             All plans include automatic updates and premium community support.
             <br />
-            Need help choosing? Contact us at 
+            Need help choosing? Contact us at contact@artificialguruji.com"
           </p>
         </motion.div>
       </div>
