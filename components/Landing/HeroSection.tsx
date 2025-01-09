@@ -54,8 +54,14 @@ export default function HeroSection() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
-              <Link href="/sign-up">
-                <RainbowButton className="px-4 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg font-medium transition-all duration-200 hover:scale-105">
+              <Link href="/sign-up" className="w-fit">
+                <RainbowButton 
+                  onClick={() => {
+                    
+                    window.location.href = "/dashboard";
+                  }}
+                  className="px-4 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg font-medium transition-all duration-200 hover:scale-105"
+                >
                   Get Started
                   <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 inline-block" />
                 </RainbowButton>
