@@ -44,8 +44,9 @@ export function AppSidebar() {
         </Button>
         {isOpen && (
           <div className="flex items-center gap-2">
-            <Image src="/logo.svg" alt="logo" width={20} height={20} />
-            <span className="font-bold text-xl">Artificial Guruji</span>
+            <span className="font-bold text-xl bg-gradient-to-r from-violet-500 via-fuchsia-500 to-blue-600 bg-clip-text text-transparent">
+              Artificial Guruji
+            </span>
           </div>
         )}
       </div>
@@ -76,8 +77,10 @@ export function AppSidebar() {
       {isOpen && (
         <div className="p-4 shrink-0">
           <div className="p-4 border border-border/40 shadow-sm text-sm flex flex-col gap-3 rounded-lg bg-slate-100 dark:bg-slate-900">
-            <h2 className="font-semibold text-md">Available Courses : {5-courseCount}</h2>
-            <Progress value={(courseCount)/5 * 100} className="h-2" />
+            <h2 className="font-semibold text-md">
+              Available Courses : {5 - courseCount}
+            </h2>
+            <Progress value={(courseCount / 5) * 100} className="h-2" />
             <h2 className="text-xs text-slate-600 dark:text-slate-400">
               {courseCount} out of 5 Tokens Used
             </h2>

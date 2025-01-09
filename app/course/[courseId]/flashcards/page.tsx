@@ -69,24 +69,25 @@ export default function Flashcards() {
   };
   
   return (
-    <div className="container mx-auto px-4 py-8 min-h-screen bg-gradient-to-b from-background to-muted">
-      <div className="flex justify-between items-center mb-12">
+    <div className="container mx-auto px-4 py-8 min-h-screen">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
       <Link
         href={`/course/${courseId}`}
-        className="flex items-center px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-lg hover:opacity-90 transition-all duration-200 shadow-md hover:translate-x-[-4px]"
+        className="flex items-center px-3 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-lg hover:opacity-90 transition-all duration-200 shadow-md hover:translate-x-[-4px] md:px-4 md:text-base self-start"
       >
-        <ChevronLeft className="w-4 h-4 mr-2" />
-        Back to Course
+        <ChevronLeft className="w-4 h-4 mr-1 md:mr-2" />
+        <span className="hidden sm:inline">Back to Course</span>
+        <span className="sm:hidden">Back</span>
       </Link>
-      <div className="text-center flex-grow">
-        <h2 className="text-5xl font-bold mb-4  bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
+      <div className="text-center">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
         Flashcards
         </h2>
-        <p className="text-gray-600 text-xl font-medium">
+        <p className="text-gray-600 text-lg md:text-xl font-medium">
         The Ultimate Tool to Lock in Concepts!
         </p>
       </div>
-      <div className="w-[100px]"></div>
+      <div className="hidden md:block w-[100px]"></div>
       </div>
 
       {loading ? (
